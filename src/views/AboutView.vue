@@ -1,32 +1,65 @@
 <template>
   <div class="about">
-    <MapContainer :center="center" class="h-full w-full" v-on:zoomend="onMapChange" v-on:move="onMapChange">
+    <MapContainer :center="center" :zoom="zoom" class="h-full w-full" v-on:zoomend="onMapChange" v-on:move="onMapChange">
       <OpenStreetMap />
-      <Marker :position="[48.3151, 3.68461]" />
-      <Marker :position="[49.68561, 3.9881]">
-        <Popup>
-          <div class="text-blue-600 font-semibold">Hello world!</div>
-        </Popup>
-      </Marker>
-    </MapContainer>
+      <Polygon v-for="l in lands" :key="l.id" :positions="l.polygon" :color="'green'" :weight="2.0" :fill-color="'blue'">
+        <TestPopup :land="l" />
+      </Polygon>
+      </MapContainer>
   </div>
 </template>
 
 <script setup lang="ts">
-console.log('1')
+import leaflet from 'leaflet';
+import { MapContainer, OpenStreetMap, Marker, Popup, Polygon } from 'vue3-leaflet';
+import { ref } from 'vue';
+import { directus } from '../api';
+import { debounce } from 'lodash';
+import TestPopup from '@/components/TestPopup.vue';
 
-import { MapContainer, OpenStreetMap, Marker, Popup } from 'vue3-leaflet';
-import { inject, ref } from 'vue';
+const center = ref([-17.7351, 168.32461]);
+const zoom = ref(14);
 
-const center = ref([48.3151, 3.68461]);
+const lands = ref([]);
+const fetchLands = async (bounds: leaflet.LatLngBounds) => {
+  const feature = leaflet.polygon([
+    bounds.getSouthWest(),
+    bounds.getNorthWest(),
+    bounds.getNorthEast(),
+    bounds.getSouthEast(),
+  ]).toGeoJSON()
+  const response = await directus.items('Land').readByQuery({
+    limit: 150,
+    fields: ['id', 'name', 'center', 'geometry', 'listings', 'listings.id', 'listings.amount'],
+    filter: {
+      center: {
+        _intersects: feature,
+      },
+    },
+  });
+  lands.value = response.data.map(s => {
+    let has_listings = s.listings.length > 0;  
+    let polygon = s.geometry.coordinates[0].map(c => new leaflet.LatLng(c[1], c[0]));
+    return {
+      id: s.id,
+      name: s.name,
+      has_listings: has_listings,
+      starting_price: has_listings ? s.listings[0].amount : null,
+      polygon: polygon,
+      center: new leaflet.LatLng(s.center.coordinates[1], s.center.coordinates[0]),
+    };
+  });
+};
 
-const makeMarkers = () => {
-  // TODO produce a couple hundred random markers with tooltips etc to test
-}
+const debouncedUpdate = debounce(async (map) => {
+  console.log('update map');
+  const bounds = map.getBounds();
+  await fetchLands(bounds);
+},  250);
 
-const onMapChange = () => {
-  makeMarkers();
-}
+const onMapChange = ({ map }) => {
+  debouncedUpdate(map);
+};
 </script>
 
 <style scoped lang="scss">
