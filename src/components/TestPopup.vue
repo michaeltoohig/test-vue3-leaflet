@@ -1,7 +1,7 @@
 <template>
-  <div :class="[show ? 'block' : 'hidden']">
-    <Marker :position="land.center">
-      <Popup>
+  <div>
+    <Marker v-if="show" :position="land.center">
+      <Popup v-if="show">
         <div class="text-blue-600 font-semibold">{{ land.id }}</div>
       </Popup>
     </Marker>  

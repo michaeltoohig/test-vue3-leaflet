@@ -21,6 +21,11 @@ const router = createRouter({
       path: '/theme-preview',
       name: 'theme-preview',
       component: () => import('../views/ThemeView.vue')
+    },
+    {
+      path: '/listing/:id',
+      name: 'listing',
+      component: () => import('../views/AdminListing.vue')
     }
   ]
 })
