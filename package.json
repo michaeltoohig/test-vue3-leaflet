@@ -32,8 +32,9 @@
     "daisyui": "^2.51.5",
     "leaflet": "^1.9.4",
     "lodash": "^4.17.21",
+    "pinia": "^2.1.7",
     "vite-plugin-pwa": "^0.14.7",
-    "vue": "^3.2.47",
+    "vue": "^3.4.19",
     "vue-router": "^4.1.6",
     "vue3-leaflet": "git+https://git@github.com/geonativefr/vue3-leaflet.git"
   },
