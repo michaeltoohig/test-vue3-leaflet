@@ -7,12 +7,12 @@ const directus = new Directus(directusUrl, {})
 
 // await directus.auth.static(staticToken)
 
-
-const getAssetUrl = (assetId, small) => {
+const getAssetUrl = async (assetId: string, small = false) => {
+  const token = await directus.auth.token
   if (small) {
-    return `${directusUrl}/assets/${assetId}?key=small`
+    return `${directusUrl}/assets/${assetId}?access_token=${token}&key=small`
   }
-  return `${directusUrl}/assets/${assetId}?key=default`
+  return `${directusUrl}/assets/${assetId}?access_token=${token}&key=default`
 }
 
 export { directus, getAssetUrl }

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    This is app is only meant to be accessed via direct links from the backend database interface. You should just close this page.
   </main>
 </template>

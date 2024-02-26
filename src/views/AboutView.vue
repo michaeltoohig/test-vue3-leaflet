@@ -48,11 +48,9 @@ const groupBounds = ref({});
 const showIslands = ref(false);
 
 const selectLand = (marker) => {
-  console.log('sl', marker);
   selectedLandId.value = marker;
 };
 const unselectLand = () => {
-  console.log('usl')
   selectedLandId.value = null;
 };
 const selectedLand = computed(() => {
@@ -121,7 +119,6 @@ const fetchIslands = async () => {
 };
 
 const debouncedUpdate = debounce(async (map) => {
-  console.log('update map');
   const bounds = map.getBounds();
   await fetchLands(bounds);
   if (islands.value.length === 0) {
@@ -131,7 +128,6 @@ const debouncedUpdate = debounce(async (map) => {
 
 const onMapChange = ({ zoom: z = undefined, map }) => {
   if (z) {
-    console.log('z', z);
     zoom.value = z;
   }
   debouncedUpdate(map);

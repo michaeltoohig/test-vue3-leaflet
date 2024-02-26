@@ -4,7 +4,6 @@ import { defineEmit } from 'vue';
 const emit = defineEmit(['click']);
 
 const handleClick = (marker) => {
-  console.log('hc', marker);
   emit('click', marker);
 };
 </script>
