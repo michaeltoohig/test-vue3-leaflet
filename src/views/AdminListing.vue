@@ -7,6 +7,10 @@
           <h2 class="card-title">{{ listing.title }}</h2>
           <h4 class="card-subtitle font-semibold">{{ listing.amount }}</h4>
           <div>Last Seen: <span class="font-light">{{ listing.date_lastseen }}</span></div>
+          <div>
+            <div>Status: {{ listing.status }}</div>
+            <div>Available: {{ listing.available }}</div>
+          </div>
           <div class="card-actions justify-end">
             <a :href="listing.url" class="btn btn-primary">
               <figure class="rounded-xl me-3"><img class="max-h-10" :src="listing.source.logo" :alt="listing.source.name"/></figure>
