@@ -4,7 +4,6 @@
 
 <script setup lang="ts">
 import { inject, onMounted, onUnmounted} from 'vue';
-import leaflet from 'leaflet';
 
 const emits = defineEmits(['click']);
 

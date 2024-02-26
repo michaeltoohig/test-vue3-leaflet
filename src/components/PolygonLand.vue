@@ -5,19 +5,13 @@
 </template>
 
 <script setup lang="ts">
-import { inject } from 'vue';
 import { Polygon } from 'vue3-leaflet';
-import { useLandStore } from '@/stores/landStore';
 import PolygonLandClick from './PolygonLandClick.vue';
-
-const landStore = useLandStore();
 
 const emits = defineEmits(['select']);
 
-const map = inject('map');
 const select = async (lid) => {
   emits('select', lid);
-  // await landStore.fetchWithinBounds(map.value.getBounds())
 };
 
 const props = defineProps({

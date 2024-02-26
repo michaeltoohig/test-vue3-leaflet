@@ -33,23 +33,6 @@ export interface Land {
   name: string
   center: leaflet.LatLngExpression
   listings: Listing[] | null
-  // polygon: GeoJSON.Polygon;
-  // location: Location;
-  // cover_image: string;
-  // comments_en: string;
-  // comments_bi: string;
-  // developer_name: string;
-  // developer_contact: string;
-  // facebook: string;
-  // link: string;
-  // documents: any[];
-  // median_sales_price: number;
-  // median_cost_square_meter: number;
-  // median_land_area: number;
-  // total_lots: number;
-  // has_listings: boolean;
-  // service_water: string;
-  // service_power: string;
 }
 
 // defines a limited subdivision object used for display on the map
